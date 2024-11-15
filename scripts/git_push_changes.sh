@@ -12,11 +12,11 @@ source ./scripts/aes_generate_key.sh
 echo "♨ AES key are cooked !"
 
 echo "⛓ Start obsidian vault packaging ..."
-OUTPUT_ARCHIVE=$(source ./scripts/vault_packaging.sh $OBSIDIAN_VAULT_ORIGIN $OBSIDIAN_VAULT_PUBLIC)
-echo "📦 Package is ready ($OUTPUT_ARCHIVE) !"
+source ./scripts/vault_packaging.sh
+echo "📦 Package is ready ($OBSIDIAN_VAULT_PUBLIC_ARCHIVE) !"
 
 echo "🔐 Start package encryption ..."
-source ./scripts/vault_encrypt.sh $OUTPUT_ARCHIVE
+source ./scripts/vault_encrypt.sh
 echo "🔒 Encrypted package is ready !"
 
 echo "🔄 Now update RSA key storage ..."
@@ -27,6 +27,9 @@ echo "🔄 Encrypt AES key for all devices and update in storage ..."
 source ./scripts/aes_update_keys.sh
 echo "✅ AES updated !"
 
-# echo "🛫 Start pushing to the remote Git repo ..."
-# source ./scripts/force_push.sh
-# echo "🏁 Everything DONE !"
+# Move encrypted archive to the public repo
+cp $TMP_VAULT_ARCHIVE $OBSIDIAN_VAULT_ENCRYPTED_ARCHIVE
+
+echo "🛫 Start pushing to the remote Git repo ..."
+source ./scripts/force_push.sh
+echo "🏁 Everything DONE !"
