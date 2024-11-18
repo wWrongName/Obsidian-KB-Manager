@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./.env
+
 source ./scripts/set_storage_paths.sh
 source ./scripts/set_storage_dirs.sh
 
